@@ -24,6 +24,7 @@ mongoose.connect('mongodb://localhost/talenthub')
     })
 
 app.use('/post', postRouter);
+app.use('/like', require('./controller/likeController'));
 
 app.post('/upload', (req, res)=>{
     console.log(req.body);
