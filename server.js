@@ -8,13 +8,17 @@ const path = require('path');
 
 const app = express();
 
+//Allow all cross origin
 app.use(cors({
     origin:'*'
 }))
+
+//Middleware for file uploader
 app.use(fileuploader());
 app.use(express.static('public'));
-
 app.use(express.json());
+
+//Connetion point of mongo db
 mongoose.connect('mongodb://localhost/talenthub')
     .then(()=>{
         console.log('Connected')
@@ -23,21 +27,10 @@ mongoose.connect('mongodb://localhost/talenthub')
         console.log('Connection failed')
     })
 
+//Route middleware for all post endpoint
 app.use('/post', postRouter);
+//Route middleware for all like endpoint
 app.use('/like', require('./controller/likeController'));
-
-app.post('/upload', (req, res)=>{
-    console.log(req.body);
-    const file = req.files.file;
-    const filename = file.name;
-    const ext = path.extname(filename);
-    const md5 = file.md5;
-    const url = `./public/${md5}${ext}`
-    file.mv(url,err=>{
-        res.json(err);
-    })
-    res.json({msg:'success'})
-})
 
 app.listen('5000', ()=>{
     console.log('Server start at 5000 port');

@@ -7,6 +7,7 @@ const path = require('path');
 
 const Post = new mongoose.model('Post', postSchema);
 
+//Endpoint for uploading a post
 postRouter.post('/', (req, res)=>{
     const file = req.files.file;
     const filename = file.name;
@@ -28,6 +29,9 @@ postRouter.post('/', (req, res)=>{
         }
     })     
 })
+
+//Endpoint for fetching all posts
+
 postRouter.get('/', (req, res)=>{
     const posts = Post.find({} ,(err, data)=>{
         if(err){
