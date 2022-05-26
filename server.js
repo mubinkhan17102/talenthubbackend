@@ -31,6 +31,7 @@ mongoose.connect('mongodb://localhost/talenthub')
 app.use('/post', postRouter);
 //Route middleware for all like endpoint
 app.use('/like', require('./controller/likeController'));
+app.use('/auth', require('./controller/authController'));
 
 app.listen('5000', ()=>{
     console.log('Server start at 5000 port');
